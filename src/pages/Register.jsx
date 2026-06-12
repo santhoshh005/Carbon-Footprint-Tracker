@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { doc, setDoc } from 'firebase/firestore';
 import { auth, db } from '../firebase/firebase';
 
 function Register() {
+  const { t } = useTranslation();
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [email, setEmail] = useState('');
@@ -31,19 +33,19 @@ function Register() {
       );
       window.location.href = '/';
     } catch (authError) {
-      const message = authError?.code || authError?.message || 'Registration failed. Please try again.';
-      let friendly = 'Registration failed. Please try again with a valid email and password.';
+      const message = authError?.code || authError?.message || t('registerError');
+      let friendly = t('registerError');
 
       if (message.includes('auth/email-already-in-use')) {
-        friendly = 'This email is already registered. Please log in instead.';
+        friendly = t('emailExists');
       } else if (message.includes('auth/invalid-email')) {
-        friendly = 'Please enter a valid email address.';
+        friendly = t('invalidEmail');
       } else if (message.includes('auth/weak-password')) {
-        friendly = 'Password is too weak. Use at least 6 characters.';
+        friendly = t('weakPassword');
       } else if (message.includes('auth/network-request-failed')) {
-        friendly = 'Network error. Check your internet connection.';
+        friendly = t('networkError');
       } else if (message.includes('auth/configuration-not-found')) {
-        friendly = 'Firebase is not fully configured. Enable Email/Password auth in your Firebase console.';
+        friendly = t('firebaseNotConfigured');
       }
 
       setError(friendly);
@@ -53,11 +55,11 @@ function Register() {
 
   return (
     <div className="mx-auto max-w-xl rounded-3xl border border-slate-800 bg-slate-900/90 p-8 shadow-xl shadow-slate-950/30">
-      <h1 className="text-3xl font-semibold text-emerald-300">Register</h1>
-      <p className="mt-2 text-slate-400">Create an account to log your footprint and climb the leaderboard.</p>
+      <h1 className="text-3xl font-semibold text-emerald-300">{t('registerTitle')}</h1>
+      <p className="mt-2 text-slate-400">{t('registerDescription')}</p>
       <form onSubmit={handleRegister} className="mt-8 space-y-6">
         <label className="block text-sm text-slate-300">
-          Name
+          {t('name')}
           <input
             type="text"
             value={name}
@@ -67,7 +69,7 @@ function Register() {
           />
         </label>
         <label className="block text-sm text-slate-300">
-          Age
+          {t('age')}
           <input
             type="number"
             min="1"
@@ -78,7 +80,7 @@ function Register() {
           />
         </label>
         <label className="block text-sm text-slate-300">
-          Email
+          {t('email')}
           <input
             type="email"
             value={email}
@@ -88,7 +90,7 @@ function Register() {
           />
         </label>
         <label className="block text-sm text-slate-300">
-          Password
+          {t('password')}
           <input
             type="password"
             value={password}
@@ -100,7 +102,7 @@ function Register() {
         </label>
         {error && <p className="text-sm text-rose-400">{error}</p>}
         <button type="submit" className="w-full rounded-3xl bg-emerald-500 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-emerald-400">
-          Create Account
+          {t('createAccount')}
         </button>
       </form>
     </div>

@@ -1,27 +1,30 @@
-const challenges = [
-  {
-    title: 'No Car Week',
-    description: 'Choose public transit, biking, or walking to reduce vehicle emissions for seven days.'
-  },
-  {
-    title: 'Zero Plastic Challenge',
-    description: 'Avoid single-use plastics and switch to reusable containers, bags, and bottles.'
-  },
-  {
-    title: 'Tree Plantation Drive',
-    description: 'Plant native trees or support a local green initiative to offset carbon emissions.'
-  }
-];
+import { useTranslation } from 'react-i18next';
 
 function Challenges() {
+  const { t } = useTranslation();
+
+  const challenges = [
+    {
+      title: t('noCarWeek'),
+      description: t('noCarWeekDesc')
+    },
+    {
+      title: t('zeroPlasticChallenge'),
+      description: t('zeroPlasticDesc')
+    },
+    {
+      title: t('treePlantation'),
+      description: t('treePlantationDesc')
+    }
+  ];
   return (
     <section className="rounded-3xl border border-slate-800 bg-slate-900/90 p-6 shadow-xl shadow-slate-950/25">
       <div className="mb-5 flex items-center justify-between gap-4">
         <div>
-          <h2 className="text-xl font-semibold text-emerald-300">Challenges</h2>
-          <p className="text-sm text-slate-400">Engage with sustainable goals designed to improve your carbon footprint.</p>
+          <h2 className="text-xl font-semibold text-emerald-300">{t('challenges')}</h2>
+          <p className="text-sm text-slate-400">{t('engageSustainableGoals')}</p>
         </div>
-        <span className="rounded-full bg-emerald-500/15 px-3 py-1 text-xs text-emerald-200">Weekly goals</span>
+        <span className="rounded-full bg-emerald-500/15 px-3 py-1 text-xs text-emerald-200">{t('weeklyGoals')}</span>
       </div>
       <div className="grid gap-4 sm:grid-cols-3">
         {challenges.map((challenge) => (

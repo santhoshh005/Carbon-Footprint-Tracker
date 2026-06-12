@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
 import CarbonForm from '../components/CarbonForm';
@@ -8,6 +9,7 @@ import Leaderboard from '../components/Leaderboard';
 import SustainabilityScore from '../components/SustainabilityScore';
 
 function Home() {
+  const { t } = useTranslation();
   const storedUser = JSON.parse(localStorage.getItem('carbonUser') || 'null');
   const [userProfile, setUserProfile] = useState({ name: '', age: null });
   const [emissionData, setEmissionData] = useState({ daily: 0, weekly: 0, monthly: 0, transport: 0, diet: 0, electricity: 0 });
@@ -62,25 +64,25 @@ function Home() {
         <div className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]">
           <div>
             <p className="text-sm uppercase tracking-[0.24em] text-emerald-400">
-              Welcome back{userProfile.name ? `, ${userProfile.name}` : ''}
+              {t('welcomeBack')}{userProfile.name ? `, ${userProfile.name}` : ''}
             </p>
-            <h1 className="mt-4 text-4xl font-semibold text-slate-100 sm:text-5xl">Track your carbon footprint with insights and challenges.</h1>
+            <h1 className="mt-4 text-4xl font-semibold text-slate-100 sm:text-5xl">{t('trackYourFootprint')}</h1>
             <p className="mt-4 max-w-2xl text-slate-400">
-              {userProfile.age ? `Age ${userProfile.age} • ` : ''}Use daily planning, sustainable lifestyle tips, and friendly competition to lower your emissions.
+              {userProfile.age ? `${t('age')} ${userProfile.age} • ` : ''}{t('useDailyPlanning')}
             </p>
           </div>
           <div className="rounded-3xl border border-slate-800 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-950 p-6 text-slate-100 shadow-2xl shadow-slate-950/40">
             <div className="space-y-4">
               <div className="rounded-3xl bg-slate-950/80 p-5">
-                <p className="text-sm uppercase tracking-[0.24em] text-slate-500">Current Stats</p>
+                <p className="text-sm uppercase tracking-[0.24em] text-slate-500">{t('currentStats')}</p>
                 <div className="mt-5 grid gap-4 sm:grid-cols-2">
                   <div className="rounded-3xl bg-slate-900/80 p-4 text-center">
-                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Daily</p>
-                    <p className="mt-3 text-3xl font-semibold text-emerald-300">{emissionData.daily} kg</p>
+                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">{t('daily')}</p>
+                    <p className="mt-3 text-3xl font-semibold text-emerald-300">{emissionData.daily} {t('kg')}</p>
                   </div>
                   <div className="rounded-3xl bg-slate-900/80 p-4 text-center">
-                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">Weekly</p>
-                    <p className="mt-3 text-3xl font-semibold text-emerald-300">{emissionData.weekly} kg</p>
+                    <p className="text-xs uppercase tracking-[0.24em] text-slate-500">{t('weekly')}</p>
+                    <p className="mt-3 text-3xl font-semibold text-emerald-300">{emissionData.weekly} {t('kg')}</p>
                   </div>
                 </div>
               </div>
