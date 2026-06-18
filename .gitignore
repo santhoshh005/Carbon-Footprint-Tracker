@@ -1,5 +1,8 @@
 # Dependency directories
 node_modules/
+**/node_modules/
+npm-cache/
+.pnpm-store/
 
 # Production build output
 dist/
